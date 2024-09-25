@@ -32,14 +32,10 @@ param (
     [String]$ClientId,
     
     [Parameter(Mandatory = $true)]
-    [String]$ClientSecret
+    [String]$CertificateThumbprint
 )
 
-$SecureClientSecret = ConvertTo-SecureString -String $ClientSecret -AsPlainText -Force
-
-$ClientSecretCredential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $ClientId, $SecureClientSecret
-
-Connect-MgGraph -TenantId $TenantId -ClientSecretCredential $ClientSecretCredential -NoWelcome
+Connect-MgGraph -TenantId $TenantId -ClientId -CertificateThumbprint $CertificateThumbprint -NoWelcome
 
 $Now = Get-Date
 

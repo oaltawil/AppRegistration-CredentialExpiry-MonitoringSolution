@@ -2,7 +2,7 @@
 This script creates the Microsoft Entra Id App Registration that will be used by the monitoring solution to access the Microsoft Graph API. 
 
 The script creates an application with the following properties:
-- Display Name: App Registration Secret Expiry Monitoring Solution
+- Display Name: App Registration Credential Expiry Monitoring Solution
 - Required Resource Access: Application.Read.All and Directory.Read.All
 - Admin Consent: Required
 - Redirect URI: https://www.microsoft.com
@@ -16,14 +16,34 @@ The script creates an application with the following properties:
 
 [CmdletBinding()]
 param (
-    $TenantId = "f57d05db-8771-4aa9-8802-d97fcff5b2ab",
+    # Tenant ID
+    [parameter($Mandatory = $true)]
+    [String]
+    $TenantId,
     
-    $ApplicationDisplayName = "App Registration Secret Expiry Monitoring Solution",
+    # Application Display Name
+    [parameter($Mandatory = $true)]
+    [String]
+    $ApplicationDisplayName,
     
+    # Application Sign-In Audience
+    [parameter($Mandatory = $true)]
+    [String]
+    $ApplicationSignInAudience = "AzureADMyOrg", # AzureADMyOrg, AzureADMultipleOrgs, AzureADandPersonalMicrosoftAccount, AzureADMultipleOrgs, AzureADandPersonalMicrosoftAccount, AzureADMultipleOrgs, AzureADandPersonalMicrosoftAccount, AzureADandPersonalMicrosoftAccount, PersonalMicrosoftAccount
+
     # Client secret expiry in months
+    [parameter($Mandatory = $true)]
+    [String]
     $ApplicationSecretExpiryInMonths = 24,
+
+    # Client secret display name
+    [parameter($Mandatory = $true)]
+    [String]
+    $ApplicationSecretDisplayName = "Initial Password created by PowerShell Script",
        
     # Redirect URI for the application
+    [parameter($Mandatory = $true)]
+    [String]
     $ApplicationRedirectUri = "https://www.microsoft.com"
 )
 
