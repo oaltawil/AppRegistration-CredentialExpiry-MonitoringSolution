@@ -22,8 +22,8 @@ The script outputs the following information for each credential that is about t
 
 [CmdletBinding()]
 param (
-    [Parameter(Mandatory = $false)]
-    [Int32]$DaysUntilExpiration = 90,
+    [Parameter(Mandatory = $true)]
+    [Int32]$DaysUntilExpiration,
     
     [Parameter(Mandatory = $true)]
     [String]$TenantId,
@@ -35,7 +35,7 @@ param (
     [String]$CertificateThumbprint
 )
 
-Connect-MgGraph -TenantId $TenantId -ClientId -CertificateThumbprint $CertificateThumbprint -NoWelcome
+Connect-MgGraph -TenantId $TenantId -ClientId $ClientId -CertificateThumbprint $CertificateThumbprint -NoWelcome
 
 $Now = Get-Date
 
